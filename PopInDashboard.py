@@ -3,8 +3,6 @@ import streamlit as st
 import pandas as pd
 import altair as alt
 import matplotlib.pyplot as plt
-from ipyleaflet import Map, Marker
-from ipywidgets import HTML
 import folium
 from streamlit_folium import st_folium  
 from geopy.geocoders import Nominatim
@@ -54,7 +52,7 @@ def load_data():
 
 df_popin = load_data()
 
-df_popin.columns = df_popin.columns.str.replace(' ', '_')
+
 
 def custom_theme():
     return {
@@ -178,11 +176,10 @@ df_popin['Month-Year'] = df_popin['Date'].dt.to_period('M')
 #-------1 Will be used for the Day of the Week 1----------#
 
 # Convert 'Date & Time' to datetime format with timezone awareness
-df_popin['Date_&_Time1'] = pd.to_datetime(df_popin['Date_&_Time'], format='%Y-%m-%dT%H:%M:%S%z', errors='coerce')
-df_popin['Date_&_Time2'] = pd.to_datetime(df_popin['Date_&_Time1'], format='%Y-%m-%dT%H:%M:%S%z', errors='coerce')
+df_popin['DateTime'] = pd.to_datetime(df_popin['Date_&_Time'], format='...', errors='coerce')
 # Check if conversion was successful
-print(df_popin.dtypes)  # This should show 'Date & Time' as datetime64[ns, UTC] or datetime64[ns, tz]
 
+st.write(df_popin.dtypes) # This should show 'Date & Time' as datetime64[ns, UTC] or datetime64[ns, tz]
 # Extract date and time separately
 df_popin['Event Date'] = df_popin['Date_&_Time2'].dt.date.astype(str) 
 df_popin['Event Time'] = df_popin['Date_&_Time2'].dt.time.astype(str)
@@ -224,8 +221,7 @@ df_popin['Location'] = df_popin['Location'].apply(replace_virtual_online)
 ### ---  GEOCODING (Convert Location to Latitude & Longitude) --- ###
 
 # Initialize Google Maps API (Replace with a real API key)
-API_KEY = "AIzaSyDlzAy0qIOtBaAbeceUFyUqgBy4Iuybfx855"  # 🔴 Replace this with your actual API key!
-gmaps = googlemaps.Client(key=API_KEY)
+
 
 # Function to get latitude and longitude from an address
 def get_lat_lon(Location, max_retries=3):
