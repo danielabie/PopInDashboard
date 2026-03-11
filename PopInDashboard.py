@@ -2,7 +2,6 @@ from datetime import date
 import streamlit as st
 import pandas as pd
 import altair as alt
-import matplotlib.pyplot as plt
 import folium
 from streamlit_folium import st_folium  
 from geopy.geocoders import Nominatim
